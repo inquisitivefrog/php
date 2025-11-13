@@ -1,0 +1,22 @@
+
+s 
+sre@cpp:~/server_status$ docker compose up -d 
+[+] Running 7/7
+ ✔ Network server_status_appnet       Created                                                                                                                     0.0s 
+ ✔ Network server_status_default      Created                                                                                                                     0.0s 
+ ✔ Volume server_status_php-code      Created                                                                                                                     0.0s 
+ ✔ Container server_status-php_fpm-1  Started                                                                                                                     0.2s 
+ ✔ Container server_status-php_cli-1  Started                                                                                                                     0.2s 
+ ✔ Container server_status-init-1     Started                                                                                                                     0.1s 
+ ✔ Container server_status-nginx-1    Started                                                                                                                     0.2s 
+sre@cpp:~/server_status$ 
+
+sre@cpp:~/server_status$ docker compose ps -a
+NAME                      IMAGE                   COMMAND                  SERVICE   CREATED         STATUS                     PORTS
+server_status-init-1      alpine                  "sh -c 'cp -r /from/…"   init      2 minutes ago   Exited (0) 2 minutes ago   
+server_status-nginx-1     nginx:latest            "nginx -g 'daemon of…"   nginx     2 minutes ago   Up 2 minutes (healthy)     0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+server_status-php_cli-1   server_status-php_cli   "docker-php-entrypoi…"   php_cli   2 minutes ago   Up 2 minutes               
+server_status-php_fpm-1   server_status-php_fpm   "docker-php-entrypoi…"   php_fpm   2 minutes ago   Up 2 minutes               9000/tcp
+sre@cpp:~/server_status$ 
+
+

@@ -1,0 +1,11 @@
+
+sre@cpp:~/server_status$ docker compose down -v
+[+] Running 7/7
+ ✔ Container server_status-init-1     Removed                                                                                                                     0.0s 
+ ✔ Container server_status-nginx-1    Removed                                                                                                                     0.1s 
+ ✔ Container server_status-php_cli-1  Removed                                                                                                                     0.1s 
+ ✔ Container server_status-php_fpm-1  Removed                                                                                                                     0.1s 
+ ✔ Network server_status_appnet       Removed                                                                                                                     0.3s 
+ ✔ Volume server_status_php-code      Removed                                                                                                                     0.0s 
+ ✔ Network server_status_default      Removed                                                                                                                     0.1s 
+

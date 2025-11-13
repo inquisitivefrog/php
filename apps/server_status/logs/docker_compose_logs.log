@@ -1,0 +1,74 @@
+
+
+sre@cpp:~/server_status$ vi logs/docker_compose_up.log
+sre@cpp:~/server_status$ docker compose logs nginx
+nginx-1  | 2025/11/13 22:36:13 [notice] 1#1: using the "epoll" event method
+nginx-1  | 2025/11/13 22:36:13 [notice] 1#1: nginx/1.29.3
+nginx-1  | 2025/11/13 22:36:13 [notice] 1#1: built by gcc 14.2.0 (Debian 14.2.0-19) 
+nginx-1  | 2025/11/13 22:36:13 [notice] 1#1: OS: Linux 6.8.0-87-generic
+nginx-1  | 2025/11/13 22:36:13 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+nginx-1  | 2025/11/13 22:36:13 [notice] 1#1: start worker processes
+nginx-1  | 2025/11/13 22:36:13 [notice] 1#1: start worker process 7
+nginx-1  | 2025/11/13 22:36:13 [notice] 1#1: start worker process 8
+nginx-1  | 2025/11/13 22:36:13 [notice] 1#1: start worker process 9
+nginx-1  | 2025/11/13 22:36:13 [notice] 1#1: start worker process 10
+nginx-1  | 2025/11/13 22:36:13 [notice] 1#1: start worker process 11
+nginx-1  | 2025/11/13 22:36:13 [notice] 1#1: start worker process 12
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:36:23 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:36:33 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:36:43 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:36:53 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:37:03 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:37:14 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:37:24 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:37:34 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:37:44 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:37:54 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:38:04 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:38:14 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:38:24 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:38:34 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:38:44 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+nginx-1  | 127.0.0.1 - - [13/Nov/2025:22:38:54 +0000] "GET /health.php HTTP/1.1" 200 95 "-" "curl/8.14.1" "-"
+sre@cpp:~/server_status$ 
+
+sre@cpp:~/server_status$ docker compose logs php_fpm
+php_fpm-1  | [13-Nov-2025 22:36:13] NOTICE: [pool www] 'user' directive is ignored when FPM is not running as root
+php_fpm-1  | [13-Nov-2025 22:36:13] NOTICE: [pool www] 'user' directive is ignored when FPM is not running as root
+php_fpm-1  | [13-Nov-2025 22:36:13] NOTICE: [pool www] 'group' directive is ignored when FPM is not running as root
+php_fpm-1  | [13-Nov-2025 22:36:13] NOTICE: [pool www] 'group' directive is ignored when FPM is not running as root
+php_fpm-1  | [13-Nov-2025 22:36:13] NOTICE: fpm is running, pid 1
+php_fpm-1  | [13-Nov-2025 22:36:13] NOTICE: ready to handle connections
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:36:23 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:36:33 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:36:43 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:36:53 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:37:03 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:37:14 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:37:24 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:37:34 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:37:44 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:37:54 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:38:04 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:38:14 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:38:24 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:38:34 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:38:44 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:38:54 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:39:04 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:39:14 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:39:24 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:39:34 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:39:44 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:39:54 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:40:04 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:40:14 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:40:24 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:40:34 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:40:44 +0000 "GET /health.php" 200
+php_fpm-1  | 172.19.0.4 -  13/Nov/2025:22:40:54 +0000 "GET /health.php" 200
+sre@cpp:~/server_status$ 
+
+sre@cpp:~/server_status$ docker compose logs php_cli
+sre@cpp:~/server_status$ 
+

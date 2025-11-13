@@ -1,0 +1,7 @@
+FROM php:8.2-cli
+
+WORKDIR /var/www/html
+COPY php/ .
+
+# NO -f! Let FastCGI pass SCRIPT_FILENAME
+CMD ["php-cgi", "-b", "9000"]
