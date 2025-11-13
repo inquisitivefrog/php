@@ -1,0 +1,10 @@
+
+sre@cpp:~/hello_world$ php hello_world.php 
+<h1>Hello, Dockerized PHP World, specifically the Software Engineer!</h1><p>This page was successfully served by PHP version: 8.3.6</p><h2>Your Recent Language Tour</h2><p>You've recently been switching between:</p><ul><li>Python</li><li>Golang</li><li>C++</li><li>PHP</li></ul><h3>Debugging Check:</h3><p>The $languages array structure:</p><pre>Array
+(
+    [0] => Python
+    [1] => Golang
+    [2] => C++
+    [3] => PHP
+)
+

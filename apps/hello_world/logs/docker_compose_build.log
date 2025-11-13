@@ -1,0 +1,80 @@
+
+
+sre@cpp:~/hello_world$ vi docker-compose.yml 
+sre@cpp:~/hello_world$ docker compose build
+[+] Building 29.1s (10/10) FINISHED                                                                                                                  
+ => [internal] load local bake definitions                                                                                                      0.0s
+ => => reading from stdin 491B                                                                                                                  0.0s
+ => [internal] load build definition from Dockerfile                                                                                            0.0s
+ => => transferring dockerfile: 323B                                                                                                            0.0s
+ => [internal] load metadata for docker.io/library/php:8.2-fpm                                                                                  1.2s
+ => [internal] load .dockerignore                                                                                                               0.0s
+ => => transferring context: 2B                                                                                                                 0.0s
+ => [1/3] FROM docker.io/library/php:8.2-fpm@sha256:e837e4369c3ada6eed8533dd4e9bc89bf4fb788d83aca207eae65fb30fecde68                           27.6s
+ => => resolve docker.io/library/php:8.2-fpm@sha256:e837e4369c3ada6eed8533dd4e9bc89bf4fb788d83aca207eae65fb30fecde68                            0.0s
+ => => sha256:294ea2f8102d5f51e1a7b21890917c81d2d96782f3ca5bb00bb29c9f1411ad1d 10.95kB / 10.95kB                                                0.0s
+ => => sha256:727f709eb37a2d82b6d3bffb250e242a7028d0d718189459cdd85aae2b27edc8 225B / 225B                                                      0.8s
+ => => sha256:f3158a17fa3696f8ab2141016faeeadfc14f565d250ca35b2b9110f6c814157c 3.25kB / 3.25kB                                                  0.0s
+ => => sha256:3da071fa34a1ccf4c9b84901ab4f6b67a96bf9fabf885be52c209ff16b0f2bf7 12.31MB / 12.31MB                                                4.6s
+ => => sha256:71f9eaf8b984fe78d57b1189bcbe4e5f2c603e939aa4f158b17cfd9f33975657 110.16MB / 110.16MB                                             23.8s
+ => => sha256:e837e4369c3ada6eed8533dd4e9bc89bf4fb788d83aca207eae65fb30fecde68 10.30kB / 10.30kB                                                0.0s
+ => => sha256:8a52abd093f096aeb9485989479b01c9f7338263d138d1227e3c617581945449 487B / 487B                                                      1.2s
+ => => sha256:5412853337495a7514ca51db033e63f8e2d14a853e6b2adc69e63d5e0dfeb99a 11.68MB / 11.68MB                                                7.5s
+ => => sha256:c37d57e5684b167e4b3a2f9d2efad204ef40bce2005e0a112c1fad4ffbd90cf9 2.45kB / 2.45kB                                                  4.7s
+ => => sha256:1523e78ccba3e304cf0a97fafe5c038cae2e757fb3e4b4a9a32f04ddd56bf5c4 251B / 251B                                                      4.9s
+ => => sha256:629204503e43ae1582430e01503dd081551d2da35f0af5bbd2f6e8b5ff76ee21 245B / 245B                                                      5.1s
+ => => sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 32B / 32B                                                        5.3s
+ => => sha256:d0c4afeebb161a789f207ad5bced401e8669122b1bf1083ee647e00d6295e538 9.18kB / 9.18kB                                                  5.5s
+ => => extracting sha256:71f9eaf8b984fe78d57b1189bcbe4e5f2c603e939aa4f158b17cfd9f33975657                                                       3.2s
+ => => extracting sha256:727f709eb37a2d82b6d3bffb250e242a7028d0d718189459cdd85aae2b27edc8                                                       0.0s
+ => => extracting sha256:3da071fa34a1ccf4c9b84901ab4f6b67a96bf9fabf885be52c209ff16b0f2bf7                                                       0.1s
+ => => extracting sha256:8a52abd093f096aeb9485989479b01c9f7338263d138d1227e3c617581945449                                                       0.0s
+ => => extracting sha256:5412853337495a7514ca51db033e63f8e2d14a853e6b2adc69e63d5e0dfeb99a                                                       0.4s
+ => => extracting sha256:c37d57e5684b167e4b3a2f9d2efad204ef40bce2005e0a112c1fad4ffbd90cf9                                                       0.0s
+ => => extracting sha256:1523e78ccba3e304cf0a97fafe5c038cae2e757fb3e4b4a9a32f04ddd56bf5c4                                                       0.0s
+ => => extracting sha256:629204503e43ae1582430e01503dd081551d2da35f0af5bbd2f6e8b5ff76ee21                                                       0.0s
+ => => extracting sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1                                                       0.0s
+ => => extracting sha256:d0c4afeebb161a789f207ad5bced401e8669122b1bf1083ee647e00d6295e538                                                       0.0s
+ => [internal] load build context                                                                                                               0.0s
+ => => transferring context: 1.81kB                                                                                                             0.0s
+ => [2/3] WORKDIR /var/www/html                                                                                                                 0.2s
+ => [3/3] COPY php/ .                                                                                                                           0.0s
+ => exporting to image                                                                                                                          0.0s
+ => => exporting layers                                                                                                                         0.0s
+ => => writing image sha256:7102fc268f60aad339cc833f5dfc90d67125c45c7b05835e28a7ee15ee86cb0e                                                    0.0s
+ => => naming to docker.io/library/hello_world-php                                                                                              0.0s
+ => resolving provenance for metadata file                                                                                                      0.0s
+[+] Building 1/1
+ ✔ hello_world-php  Built                                                                                                                       0.0s 
+
+sre@cpp:~/hello_world$ docker images | head -2
+REPOSITORY        TAG       IMAGE ID       CREATED          SIZE
+hello_world-php   latest    7102fc268f60   17 seconds ago   494MB
+
+sre@cpp:~/hello_world$ docker compose build
+[+] Building 0.7s (10/10) FINISHED                                                                                                                   
+ => [internal] load local bake definitions                                                                                                      0.0s
+ => => reading from stdin 491B                                                                                                                  0.0s
+ => [internal] load build definition from Dockerfile                                                                                            0.0s
+ => => transferring dockerfile: 323B                                                                                                            0.0s
+ => [internal] load metadata for docker.io/library/php:8.2-fpm                                                                                  0.6s
+ => [internal] load .dockerignore                                                                                                               0.0s
+ => => transferring context: 2B                                                                                                                 0.0s
+ => [1/3] FROM docker.io/library/php:8.2-fpm@sha256:e837e4369c3ada6eed8533dd4e9bc89bf4fb788d83aca207eae65fb30fecde68                            0.0s
+ => [internal] load build context                                                                                                               0.0s
+ => => transferring context: 554B                                                                                                               0.0s
+ => CACHED [2/3] WORKDIR /var/www/html                                                                                                          0.0s
+ => [3/3] COPY php/ .                                                                                                                           0.0s
+ => exporting to image                                                                                                                          0.0s
+ => => exporting layers                                                                                                                         0.0s
+ => => writing image sha256:a52d76cacce8c9b9acf5d75614a27b74d09ab08caa4e29c2c595cef15147bef9                                                    0.0s
+ => => naming to docker.io/library/hello_world-php                                                                                              0.0s
+ => resolving provenance for metadata file                                                                                                      0.0s
+[+] Building 1/1
+ ✔ hello_world-php  Built                                                                                                                       0.0s 
+
+sre@cpp:~/hello_world$ docker images | head -2
+REPOSITORY        TAG       IMAGE ID       CREATED          SIZE
+hello_world-php   latest    a52d76cacce8   24 seconds ago   494MB
+sre@cpp:~/hello_world$ 
+

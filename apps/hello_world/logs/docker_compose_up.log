@@ -1,0 +1,36 @@
+
+sre@cpp:~/hello_world$ docker compose up -d
+[+] Running 8/8
+ ✔ nginx Pulled                                                                                                                                 8.0s 
+   ✔ 51365f04b688 Already exists                                                                                                                0.0s 
+   ✔ 7d3a535ffc2f Pull complete                                                                                                                 6.4s 
+   ✔ d9b6d209211f Pull complete                                                                                                                 6.4s 
+   ✔ 59679015de73 Pull complete                                                                                                                 6.5s 
+   ✔ 0469ebd60c79 Pull complete                                                                                                                 6.5s 
+   ✔ 3db9f1af9e10 Pull complete                                                                                                                 6.5s 
+   ✔ 184706839d41 Pull complete                                                                                                                 6.5s 
+[+] Running 3/3
+ ✔ Network hello_world_app-network  Created                                                                                                     0.0s 
+ ✔ Container hello_world-php-1      Started                                                                                                     0.2s 
+ ✔ Container hello_world-nginx-1    Started                                                                                                     0.2s 
+
+sre@cpp:~/hello_world$ docker compose ps -a
+NAME                  IMAGE             COMMAND                  SERVICE   CREATED          STATUS          PORTS
+hello_world-nginx-1   nginx:latest      "/docker-entrypoint.…"   nginx     26 seconds ago   Up 26 seconds   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+hello_world-php-1     hello_world-php   "docker-php-entrypoi…"   php       26 seconds ago   Up 26 seconds   9000/tcp
+
+
+sre@cpp:~/hello_world$ docker compose up -d
+[+] Running 3/3
+ ✔ Network hello_world_app-network  Created                                                                                                     0.0s 
+ ✔ Container hello_world-php-1      Started                                                                                                     0.1s 
+ ✔ Container hello_world-nginx-1    Started                                                                                                     0.2s 
+
+
+sre@cpp:~/hello_world$ docker compose ps -a
+NAME                  IMAGE             COMMAND                  SERVICE   CREATED              STATUS              PORTS
+hello_world-nginx-1   nginx:latest      "/docker-entrypoint.…"   nginx     About a minute ago   Up About a minute   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+hello_world-php-1     hello_world-php   "docker-php-entrypoi…"   php       About a minute ago   Up About a minute   9000/tcp
+sre@cpp:~/hello_world$ 
+
+

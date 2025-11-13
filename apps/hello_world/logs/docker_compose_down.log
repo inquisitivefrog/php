@@ -1,0 +1,7 @@
+
+sre@cpp:~/hello_world$ docker compose down
+[+] Running 3/3
+ ✔ Container hello_world-nginx-1    Removed                                                                                                     0.2s 
+ ✔ Container hello_world-php-1      Removed                                                                                                     0.1s 
+ ✔ Network hello_world_app-network  Removed                                                                                                     0.1s 
+
