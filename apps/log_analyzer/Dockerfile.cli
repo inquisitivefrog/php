@@ -1,0 +1,8 @@
+FROM php:8.2-cli
+
+WORKDIR /var/www/html
+COPY php/ .
+
+RUN chmod +x /var/www/html/scripts/*.php 2>/dev/null || true
+
+CMD ["php", "-v"]

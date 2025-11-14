@@ -1,0 +1,51 @@
+services:
+  init:
+    image: alpine
+    volumes:
+      - ./php:/from:ro
+      - php-code:/to
+    command: >
+      sh -c "
+        cp -r /from/* /to/ &&
+        chmod -R 755 /to &&
+        chown -R 33:33 /to
+      "
+
+  php_fpm:
+    build: .
+    user: "33:33"
+    volumes:
+      - php-code:/var/www/html
+    networks: [appnet]
+
+  php_cli:
+    build:
+      context: .
+      dockerfile: Dockerfile.cli
+    volumes:
+      - php-code:/var/www/html
+      - logs:/var/log/nginx
+    profiles:
+      - cli
+    networks: [appnet]
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - php-code:/var/www/html:ro
+      - logs:/var/log/nginx
+      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/docker-entrypoint.sh:/docker-entrypoint.sh:ro
+    depends_on:
+      - php_fpm
+    networks: [appnet]
+    entrypoint: ["/docker-entrypoint.sh"]
+
+networks:
+  appnet:
+
+volumes:
+  php-code:
+  logs:

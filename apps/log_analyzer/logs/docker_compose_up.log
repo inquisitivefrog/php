@@ -1,0 +1,30 @@
+
+sre@cpp:~/log_analyzer$ docker compose up -d --build
+[+] Building 0.6s (11/11) FINISHED                                                                                                                           
+ => [internal] load local bake definitions                                                                                                              0.0s
+ => => reading from stdin 511B                                                                                                                          0.0s
+ => [internal] load build definition from Dockerfile                                                                                                    0.0s
+ => => transferring dockerfile: 135B                                                                                                                    0.0s
+ => [internal] load metadata for docker.io/library/php:8.2-fpm                                                                                          0.5s
+ => [internal] load .dockerignore                                                                                                                       0.0s
+ => => transferring context: 2B                                                                                                                         0.0s
+ => [1/4] FROM docker.io/library/php:8.2-fpm@sha256:e837e4369c3ada6eed8533dd4e9bc89bf4fb788d83aca207eae65fb30fecde68                                    0.0s
+ => [internal] load build context                                                                                                                       0.0s
+ => => transferring context: 3.20kB                                                                                                                     0.0s
+ => CACHED [2/4] WORKDIR /var/www/html                                                                                                                  0.0s
+ => CACHED [3/4] COPY php/ .                                                                                                                            0.0s
+ => CACHED [4/4] RUN chown -R www-data:www-data /var/www/html                                                                                           0.0s
+ => exporting to image                                                                                                                                  0.0s
+ => => exporting layers                                                                                                                                 0.0s
+ => => writing image sha256:c9a2a6cb207d2668cf209a3a4437fb6ce7d7b69af9e0cf3eeec11d478bfc94d8                                                            0.0s
+ => => naming to docker.io/library/log_analyzer-php_fpm                                                                                                 0.0s
+ => resolving provenance for metadata file                                                                                                              0.0s
+[+] Running 6/6
+ ✔ log_analyzer-php_fpm              Built                                                                                                              0.0s 
+ ✔ Network log_analyzer_default      Created                                                                                                            0.0s 
+ ✔ Network log_analyzer_appnet       Created                                                                                                            0.0s 
+ ✔ Container log_analyzer-php_fpm-1  Started                                                                                                            0.2s 
+ ✔ Container log_analyzer-init-1     Started                                                                                                            0.2s 
+ ✔ Container log_analyzer-nginx-1    Started                                                                                                            0.2s 
+sre@cpp:~/log_analyzer$ 
+

@@ -1,0 +1,4 @@
+
+sre@cpp:~/log_analyzer$ seq 100 | xargs -I{} curl -s http://localhost:8080/health.php > /dev/null
+sre@cpp:~/log_analyzer$ sleep 5
+

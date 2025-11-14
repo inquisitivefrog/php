@@ -1,0 +1,50 @@
+sre@cpp:~/log_analyzer$ docker compose run --rm php_cli php /var/www/html/scripts/analyze-logs.php
+Analyzing: /var/log/nginx/access.log (68,981 bytes)
+============================================================
+Parsed 700 access log lines
+
+Top 10 IPs:
+  600 → 172.19.0.1
+  100 → 172.20.0.1
+
+Top 404 URLs:
+  (none)
+
+Top User Agents:
+  700 → curl/8.5.0
+
+Done.
+sre@cpp:~/log_analyzer$ docker compose run --rm php_cli php /var/www/html/scripts/analyze-logs.php --json
+{
+    "summary": {
+        "file": "\/var\/log\/nginx\/access.log",
+        "size_bytes": 68981,
+        "parsed_lines": 700
+    },
+    "top_ips": {
+        "172.19.0.1": 600,
+        "172.20.0.1": 100
+    },
+    "top_404_urls": [],
+    "top_user_agents": {
+        "curl\/8.5.0": 700
+    }
+}
+sre@cpp:~/log_analyzer$ docker compose run --rm php_cli php /var/www/html/scripts/analyze-logs.php /var/log/nginx/access.log --json
+{
+    "summary": {
+        "file": "\/var\/log\/nginx\/access.log",
+        "size_bytes": 68981,
+        "parsed_lines": 700
+    },
+    "top_ips": {
+        "172.19.0.1": 600,
+        "172.20.0.1": 100
+    },
+    "top_404_urls": [],
+    "top_user_agents": {
+        "curl\/8.5.0": 700
+    }
+}
+sre@cpp:~/log_analyzer$ 
+

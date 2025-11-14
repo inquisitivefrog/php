@@ -1,0 +1,11 @@
+sre@cpp:~/log_analyzer$ docker compose down -v
+[+] Running 7/7
+ ✔ Container log_analyzer-init-1     Removed                                                                                                            0.0s 
+ ✔ Container log_analyzer-nginx-1    Removed                                                                                                            0.2s 
+ ✔ Container log_analyzer-php_fpm-1  Removed                                                                                                            0.1s 
+ ! Volume log_analyzer_logs          Resource is still in use                                                                                           0.0s 
+ ! Volume log_analyzer_php-code      Resource is still in use                                                                                           0.0s 
+ ✔ Network log_analyzer_default      Removed                                                                                                            0.3s 
+ ✔ Network log_analyzer_appnet       Removed                                                                                                            0.2s 
+sre@cpp:~/log_analyzer$ 
+
