@@ -1,0 +1,52 @@
+
+
+sre@cpp:~/laravel-feature-lab$ docker compose up -d --build
+[+] Running 37/37
+ ✔ meilisearch Pulled                                                                                                                       51.1s 
+ ✔ nginx Pulled                                                                                                                             29.7s 
+ ✔ postgres Pulled                                                                                                                          52.0s 
+ ✔ redis Pulled                                                                                                                             13.5s 
+[+] Building 34.8s (13/13) FINISHED                                                                                                               
+ => [internal] load local bake definitions                                                                                                   0.0s
+ => => reading from stdin 545B                                                                                                               0.0s
+ => [internal] load build definition from Dockerfile                                                                                         0.0s
+ => => transferring dockerfile: 479B                                                                                                         0.0s
+ => [internal] load metadata for docker.io/library/composer:2                                                                                1.2s
+ => [internal] load metadata for docker.io/library/php:8.3-fpm                                                                               0.6s
+ => [internal] load .dockerignore                                                                                                            0.0s
+ => => transferring context: 2B                                                                                                              0.0s
+ => CACHED [stage-0 1/5] FROM docker.io/library/php:8.3-fpm@sha256:342bc51368fbc64ba9dfd4fa083a9d0b4000101b6c073d24350c9fbefd6e2a45          0.0s
+ => FROM docker.io/library/composer:2@sha256:7384cf9fa70b710af02c9f40bec6e44472e07138efa5ab3428a058087c0d2724                               13.3s
+ => => resolve docker.io/library/composer:2@sha256:7384cf9fa70b710af02c9f40bec6e44472e07138efa5ab3428a058087c0d2724                          0.0s
+ => => sha256:7384cf9fa70b710af02c9f40bec6e44472e07138efa5ab3428a058087c0d2724 10.09kB / 10.09kB                                             0.0s
+ => => sha256:134e4bf00fe31dfdc35b446b4ebffb541e8dbd7f38036747fe9889b345d42e86 3.80kB / 3.80kB                                               0.0s
+ => => sha256:840a58cf528a833406aed09074d92b65ab47246972e8809af347c287875e473d 34.04MB / 34.04MB                                            11.8s
+ => => sha256:04dcfaa280bac9f70c229a45c784b28dc33e9143b96a7f941df8e148593f26fa 260B / 260B                                                   0.3s
+ => => sha256:5b6312b9a36c3e54a2cfeeef884178b8359cee57d444b9abd67631a1b4441c29 11.89kB / 11.89kB                                             0.0s
+ => => sha256:393206ae3cd3c02d8b7bbb3bbb3ed748e99f15a90f976d28b6be9a7fec89eae9 994.71kB / 994.71kB                                           0.7s
+ => => sha256:898e213f6184a6a11f95c875e59e168a7f131756bc3154801571efb5e0afb878 420B / 420B                                                   0.6s
+ => => sha256:bcebd9d1575e3d057c6bf0c8157731a059aa04d82b35d508958c9dc74d3b3b04 93B / 93B                                                     0.7s
+ => => extracting sha256:840a58cf528a833406aed09074d92b65ab47246972e8809af347c287875e473d                                                    1.4s
+ => => extracting sha256:04dcfaa280bac9f70c229a45c784b28dc33e9143b96a7f941df8e148593f26fa                                                    0.0s
+ => => extracting sha256:393206ae3cd3c02d8b7bbb3bbb3ed748e99f15a90f976d28b6be9a7fec89eae9                                                    0.0s
+ => => extracting sha256:898e213f6184a6a11f95c875e59e168a7f131756bc3154801571efb5e0afb878                                                    0.0s
+ => => extracting sha256:bcebd9d1575e3d057c6bf0c8157731a059aa04d82b35d508958c9dc74d3b3b04                                                    0.0s
+ => [stage-0 2/5] RUN apt-get update && apt-get install -y git curl libpq-dev libzip-dev unzip zip && docker-php-ext-install pdo pdo_pgsql  19.7s
+ => [stage-0 3/5] COPY --from=composer:2 /usr/bin/composer /usr/bin/composer                                                                 0.0s
+ => [stage-0 4/5] WORKDIR /var/www/html                                                                                                      0.0s
+ => [stage-0 5/5] RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt-get install -y nodejs                                13.4s
+ => exporting to image                                                                                                                       0.4s
+ => => exporting layers                                                                                                                      0.4s
+ => => writing image sha256:ebae3f1f8240427b3e56cbb6babd61876c8424ab107fdef0e4366cbf467ae611                                                 0.0s
+ => => naming to docker.io/library/laravel-feature-lab-app                                                                                   0.0s
+ => resolving provenance for metadata file                                                                                                   0.0s
+[+] Running 8/8
+ ✔ laravel-feature-lab-app              Built                                                                                                0.0s 
+ ✔ Network laravel-feature-lab_laravel  Created                                                                                              0.0s 
+ ✔ Volume laravel-feature-lab_pgdata    Created                                                                                              0.0s 
+ ✔ Container laravel_postgres           Started                                                                                              0.2s 
+ ✔ Container laravel_redis              Started                                                                                              0.1s 
+ ✔ Container laravel_meilisearch        Started                                                                                              0.2s 
+ ✔ Container laravel_app                Started                                                                                              0.2s 
+ ✔ Container laravel_nginx              Started                                                                                              0.3s 
+

@@ -1,0 +1,11 @@
+
+
+sre@cpp:~/laravel-feature-lab$ docker compose ps -a
+NAME                  IMAGE                         COMMAND                  SERVICE       CREATED         STATUS         PORTS
+laravel_app           laravel-feature-lab-app       "docker-php-entrypoi…"   app           3 minutes ago   Up 3 minutes   9000/tcp
+laravel_meilisearch   getmeili/meilisearch:latest   "tini -- /bin/sh -c …"   meilisearch   3 minutes ago   Up 3 minutes   0.0.0.0:7700->7700/tcp, [::]:7700->7700/tcp
+laravel_nginx         nginx:alpine                  "/docker-entrypoint.…"   nginx         3 minutes ago   Up 3 minutes   0.0.0.0:8000->80/tcp, [::]:8000->80/tcp
+laravel_postgres      postgres:16                   "docker-entrypoint.s…"   postgres      3 minutes ago   Up 3 minutes   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+laravel_redis         redis:alpine                  "docker-entrypoint.s…"   redis         3 minutes ago   Up 3 minutes   0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp
+sre@cpp:~/laravel-feature-lab$ 
+

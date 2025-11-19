@@ -1,0 +1,42 @@
+
+sre@cpp:~/laravel-feature-lab$ docker build --target production -t laravel-prod -f docker/php/Dockerfile .
+[+] Building 0.5s (31/31) FINISHED                                                                                                                                       docker:default
+ => [internal] load build definition from Dockerfile                                                                                                                               0.0s
+ => => transferring dockerfile: 3.65kB                                                                                                                                             0.0s
+ => [internal] load metadata for docker.io/library/php:8.3-fpm                                                                                                                     0.3s
+ => [internal] load .dockerignore                                                                                                                                                  0.0s
+ => => transferring context: 93B                                                                                                                                                   0.0s
+ => [php-base 1/3] FROM docker.io/library/php:8.3-fpm@sha256:342bc51368fbc64ba9dfd4fa083a9d0b4000101b6c073d24350c9fbefd6e2a45                                                      0.0s
+ => [internal] load build context                                                                                                                                                  0.1s
+ => => transferring context: 790.71kB                                                                                                                                              0.1s
+ => CACHED [production 2/7] WORKDIR /var/www/html                                                                                                                                  0.0s
+ => CACHED [php-base 2/3] RUN apt-get update && apt-get install -y --no-install-recommends     git     curl     unzip     libpq-dev     libicu-dev     libzip-dev     libpng-dev   0.0s
+ => CACHED [php-base 3/3] WORKDIR /var/www/html                                                                                                                                    0.0s
+ => CACHED [php-extensions 1/4] RUN docker-php-ext-configure intl     && docker-php-ext-install intl                                                                               0.0s
+ => CACHED [php-extensions 2/4] RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp     && docker-php-ext-install gd                                           0.0s
+ => CACHED [php-extensions 3/4] RUN docker-php-ext-install     pdo_pgsql zip exif bcmath gmp pcntl opcache                                                                         0.0s
+ => CACHED [php-extensions 4/4] RUN pecl install redis xdebug     && docker-php-ext-enable redis xdebug                                                                            0.0s
+ => CACHED [node-deps 1/4] RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -     && apt-get install -y --no-install-recommends nodejs     && npm install -g npm@latest   0.0s
+ => CACHED [node-deps 2/4] WORKDIR /var/www/html                                                                                                                                   0.0s
+ => CACHED [node-deps 3/4] COPY src/package.json src/package-lock.json ./                                                                                                          0.0s
+ => CACHED [node-deps 4/4] RUN npm install --silent --no-progress                                                                                                                  0.0s
+ => CACHED [composer-deps 1/3] RUN curl -sS https://getcomposer.org/installer | php     && mv composer.phar /usr/local/bin/composer                                                0.0s
+ => CACHED [composer-deps 2/3] COPY src/composer.json src/composer.lock ./                                                                                                         0.0s
+ => CACHED [composer-deps 3/3] RUN composer install     --no-scripts     --no-autoloader     --prefer-dist     --no-interaction                                                    0.0s
+ => CACHED [app-build 1/6] COPY --from=composer-deps /var/www/html/vendor ./vendor                                                                                                 0.0s
+ => CACHED [app-build 2/6] COPY --from=composer-deps /usr/local/bin/composer /usr/local/bin/composer                                                                               0.0s
+ => CACHED [app-build 3/6] COPY src/ ./                                                                                                                                            0.0s
+ => CACHED [app-build 4/6] RUN npm run build --if-present                                                                                                                          0.0s
+ => CACHED [app-build 5/6] RUN composer dump-autoload --optimize                                                                                                                   0.0s
+ => CACHED [app-build 6/6] RUN if [ "false" = "true" ]; then         echo "Debug mode enabled";         pecl install xdebug && docker-php-ext-enable xdebug;     fi                0.0s
+ => CACHED [production 3/7] COPY --from=app-build /var/www/html /var/www/html                                                                                                      0.0s
+ => CACHED [production 4/7] RUN apt-get update && apt-get purge -y     g++ make pkg-config git autoconf libc-dev     && apt-get autoremove -y     && rm -rf /var/lib/apt/lists/*   0.0s
+ => CACHED [production 5/7] RUN chown -R www-data:www-data /var/www/html     && chmod -R 755 /var/www/html                                                                         0.0s
+ => CACHED [production 6/7] COPY docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh                                                                                             0.0s
+ => CACHED [production 7/7] RUN chmod +x /usr/local/bin/entrypoint.sh                                                                                                              0.0s
+ => exporting to image                                                                                                                                                             0.0s
+ => => exporting layers                                                                                                                                                            0.0s
+ => => writing image sha256:6627281c8fd941495f167ba9c9a037c539d22ed1a66cdd2384fa0ef359e8a9ec                                                                                       0.0s
+ => => naming to docker.io/library/laravel-prod                                                                                                                                    0.0s
+sre@cpp:~/laravel-feature-lab$ 
+

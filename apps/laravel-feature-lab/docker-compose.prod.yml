@@ -1,0 +1,115 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      target: laravel-production
+      args:
+        APP_ENV: production
+    image: laravel-feature-app:prod
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      DB_PASSWORD: ${POSTGRES_PASSWORD}     # Injected at runtime using secret
+    secrets:
+      - postgres_password
+      - app_key
+    volumes: []    # No dev bind mounts
+    read_only: true
+    tmpfs:
+      - /var/www/html/storage:exec
+      - /var/www/html/bootstrap/cache:exec
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "php", "-v"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    networks:
+      - laravel-net
+
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes: []
+    restart: unless-stopped
+    environment:
+      NGINX_ENV: production
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    networks:
+      - laravel-net
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-laravel}
+      POSTGRES_USER: ${DB_USERNAME:-laravel}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    secrets:
+      - postgres_password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks:
+      - laravel-net
+
+  redis:
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - laravel-net
+
+  meilisearch:
+    image: getmeili/meilisearch:latest
+    environment:
+      MEILI_ENV: production
+      MEILI_NO_ANALYTICS: "true"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:7700/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - meili_data:/meili_data
+    networks:
+      - laravel-net
+
+  mailpit:
+    deploy:
+      replicas: 0   # disabled in production
+
+secrets:
+  postgres_password:
+    file: ./secrets/postgres_password.txt
+  app_key:
+    file: ./secrets/app_key.txt
+
+volumes:
+  pgdata:
+  meili_data:
+
+networks:
+  laravel-net:
+

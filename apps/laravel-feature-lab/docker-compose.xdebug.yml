@@ -1,0 +1,82 @@
+# docker-compose.xdebug.yml
+
+services:
+  # --------------------------
+  # PHP / Laravel App
+  # --------------------------
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      target: php-extensions
+      args:
+        PHP_VERSION: 8.3
+        INSTALL_XDEBUG: "true"
+    container_name: laravel-app
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./src:/var/www/html:cached
+      - ./secrets:/run/secrets:ro
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      DB_PASSWORD_FILE: /run/secrets/postgres_password.txt
+      APP_KEY_FILE: /run/secrets/app_key.txt
+    depends_on:
+      - postgres
+      - redis
+      - meilisearch
+      - mailpit
+
+  # --------------------------
+  # PostgreSQL Database
+  # --------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: laravel-postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./secrets:/run/secrets:ro
+    environment:
+      POSTGRES_DB: laravel
+      POSTGRES_USER: laravel
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password.txt
+
+  # --------------------------
+  # Redis
+  # --------------------------
+  redis:
+    image: redis:8-alpine
+    container_name: laravel-redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+
+  # --------------------------
+  # Meilisearch
+  # --------------------------
+  meilisearch:
+    image: getmeili/meilisearch:v1.2
+    container_name: laravel-meilisearch
+    ports:
+      - "7700:7700"
+    environment:
+      MEILI_MASTER_KEY: "masterKey"
+
+  # --------------------------
+  # Mailpit (SMTP / Mail Testing)
+  # --------------------------
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: laravel-mailpit
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+volumes:
+  pgdata:
+    driver: local
+

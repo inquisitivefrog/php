@@ -1,0 +1,7 @@
+
+sre@cpp:~/laravel-feature-lab$ make ps
+docker compose -f docker-compose.yml ps
+NAME                 IMAGE                COMMAND                  SERVICE   CREATED              STATUS              PORTS
+laravel-feature-db   postgres:15-alpine   "docker-entrypoint.s…"   db        About a minute ago   Up About a minute   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+sre@cpp:~/laravel-feature-lab$ 
+

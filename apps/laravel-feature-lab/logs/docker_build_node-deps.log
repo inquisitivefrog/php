@@ -1,0 +1,53 @@
+
+sre@cpp:~/laravel-feature-lab$ docker build --no-cache --target node-deps -t laravel-node-deps -f docker/php/Dockerfile .
+[+] Building 4.8s (9/9) FINISHED                                                                                                                                         docker:default
+ => [internal] load build definition from Dockerfile                                                                                                                               0.0s
+ => => transferring dockerfile: 3.92kB                                                                                                                                             0.0s
+ => [internal] load metadata for docker.io/library/node:20-bullseye                                                                                                                0.1s
+ => [internal] load .dockerignore                                                                                                                                                  0.0s
+ => => transferring context: 93B                                                                                                                                                   0.0s
+ => [node-deps 1/4] FROM docker.io/library/node:20-bullseye@sha256:98ea4012488d9fcf75ff36a4cae490abab3cc95c0b26dd68e7f2ec2d0d61022d                                                0.0s
+ => [internal] load build context                                                                                                                                                  0.0s
+ => => transferring context: 103B                                                                                                                                                  0.0s
+ => CACHED [node-deps 2/4] WORKDIR /app                                                                                                                                            0.0s
+ => [node-deps 3/4] COPY src/package.json src/package-lock.json ./                                                                                                                 0.0s
+ => [node-deps 4/4] RUN npm ci --silent --no-audit                                                                                                                                 4.5s
+ => exporting to image                                                                                                                                                             0.2s
+ => => exporting layers                                                                                                                                                            0.2s
+ => => writing image sha256:0047922742465df96b8184652163b7c77c05a723023c8e494328843d15b62870                                                                                       0.0s
+ => => naming to docker.io/library/laravel-node-deps                                                                                                                               0.0s
+
+sre@cpp:~/laravel-feature-lab$ docker build --no-cache --target node-deps -t laravel-node-deps -f docker/php/Dockerfile .                                                       
+[+] Building 129.0s (24/24) FINISHED                                                                                                                                     docker:default 
+ => [internal] load build definition from Dockerfile                                                                                                                               0.0s
+ => => transferring dockerfile: 3.96kB                                                                                                                                             0.0s
+ => [internal] load metadata for docker.io/library/composer:2                                                                                                                      0.3s
+ => [internal] load metadata for docker.io/library/php:8.3-fpm                                                                                                                     0.3s
+ => [internal] load .dockerignore                                                                                                                                                  0.0s
+ => => transferring context: 93B                                                                                                                                                   0.0s
+ => [php-base 1/3] FROM docker.io/library/php:8.3-fpm@sha256:25d6030b5ecd11f7edcbdedbfed3dae55d2032330eed73eaeab5ae0bcb54bc9d                                                      0.0s
+ => [internal] load build context                                                                                                                                                  0.0s
+ => => transferring context: 92.87kB                                                                                                                                               0.0s
+ => CACHED FROM docker.io/library/composer:2@sha256:7384cf9fa70b710af02c9f40bec6e44472e07138efa5ab3428a058087c0d2724                                                               0.0s
+ => CACHED [php-base 2/3] WORKDIR /var/www/html                                                                                                                                    0.0s
+ => [php-base 3/3] RUN apt-get update     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends         ca-certificates curl git unzip gnupg2         zlib  9.8s
+ => [php-extensions 1/6] RUN apt-get update && apt-get install -y --no-install-recommends         libicu-dev libxml2-dev libgmp-dev libssl-dev uuid-dev     && rm -rf /var/lib/ap  8.6s
+ => [php-extensions 2/6] RUN docker-php-ext-install -j$(nproc)         pdo pdo_pgsql bcmath mbstring exif pcntl zip intl gmp soap dom xml xmlwriter opcache                       58.9s 
+ => [php-extensions 3/6] RUN docker-php-ext-configure gd --with-freetype --with-jpeg     && docker-php-ext-install -j$(nproc) gd                                                   4.6s 
+ => [php-extensions 4/6] RUN pecl channel-update pecl.php.net     && pecl install redis apcu     && docker-php-ext-enable redis apcu                                              23.8s 
+ => [php-extensions 5/6] RUN if [ "false" = "true" ]; then         pecl install xdebug && docker-php-ext-enable xdebug;     else echo "Skipping Xdebug installation"; fi           0.1s 
+ => [php-extensions 6/6] RUN apt-get purge -y --auto-remove g++     && rm -rf /tmp/* /var/tmp/*                                                                                    0.3s 
+ => [composer-deps 1/4] COPY --from=composer:2 /usr/bin/composer /usr/bin/composer                                                                                                 0.0s 
+ => [composer-deps 2/4] WORKDIR /var/www/html                                                                                                                                      0.0s 
+ => [composer-deps 3/4] COPY src/composer.json src/composer.lock ./                                                                                                                0.0s 
+ => [composer-deps 4/4] RUN composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader --no-scripts                                                            3.5s 
+ => [node-deps 1/4] RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -     && apt-get install -y nodejs     && node -v && npm -v                                       14.3s 
+ => [node-deps 2/4] WORKDIR /app                                                                                                                                                   0.0s 
+ => [node-deps 3/4] COPY src/package.json src/package-lock.json ./                                                                                                                 0.0s 
+ => [node-deps 4/4] RUN npm ci --silent --no-audit                                                                                                                                 4.0s 
+ => exporting to image                                                                                                                                                             0.5s 
+ => => exporting layers                                                                                                                                                            0.5s 
+ => => writing image sha256:92d1e29965e7f28d5a91579d348093f88c7b2d595137df1084164d93d5ab1f0f                                                                                       0.0s 
+ => => naming to docker.io/library/laravel-node-deps                                                                                                                               0.0s
+sre@cpp:~/laravel-feature-lab$ 
+

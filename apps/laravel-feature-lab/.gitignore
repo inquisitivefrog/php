@@ -1,0 +1,77 @@
+# ──────────────────────────────────────────────────────────────
+# Laravel application (inside src/)
+# ──────────────────────────────────────────────────────────────
+src/vendor/
+src/node_modules/
+
+# Vite build output
+src/public/build/
+src/public/hot
+src/public/storage
+
+# Laravel storage & cache
+src/storage/*.key
+src/storage/**/*.key
+src/storage/app/public/
+src/storage/framework/cache/data/
+src/storage/framework/sessions/
+src/storage/framework/views/*.php
+src/storage/framework/testing/
+src/storage/logs/
+src/bootstrap/cache/*.php
+
+# Laravel environment files (never commit real secrets)
+src/.env
+src/.env.*
+!.env.example           # this one lives in root and is committed
+
+# ──────────────────────────────────────────────────────────────
+# Your secrets folder
+# ──────────────────────────────────────────────────────────────
+secrets/
+secrets/*
+
+# OAuth keys (Passport, etc.)
+src/storage/oauth-*.key
+
+# ──────────────────────────────────────────────────────────────
+# Node / Vite caches
+# ──────────────────────────────────────────────────────────────
+src/.vite/
+src/dist/
+src/build/
+
+# Node logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ──────────────────────────────────────────────────────────────
+# Composer & testing (inside src/)
+# ──────────────────────────────────────────────────────────────
+src/composer.lock       # optional – most teams commit it
+src/phpunit.xml
+src/.phpunit.result.cache
+
+# ──────────────────────────────────────────────────────────────
+# Docker & overrides
+# ──────────────────────────────────────────────────────────────
+docker-compose.override.yml
+docker/php/.phpunit.cache/
+docker/php/xdebug.ini
+docker/php/*local*.ini
+docker/php/*.local.ini
+
+# ──────────────────────────────────────────────────────────────
+# OS / Editor / IDE junk
+# ──────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.cache
+*.tmp
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
