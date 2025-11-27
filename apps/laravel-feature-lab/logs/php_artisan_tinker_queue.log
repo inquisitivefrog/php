@@ -1,0 +1,29 @@
+
+sre@cpp:~/laravel-feature-lab$ vi logs/php_artisan_tinker.log
+sre@cpp:~/laravel-feature-lab$ docker compose exec app php artisan make:job TestJob
+
+   INFO  Job [app/Jobs/TestJob.php] created successfully.  
+
+sre@cpp:~/laravel-feature-lab$ vi src/app/Jobs/TestJob.php
+sre@cpp:~/laravel-feature-lab$ docker compose exec app php artisan tinker
+Psy Shell v0.12.14 (PHP 8.3.27 — cli) by Justin Hileman
+New PHP manual is available (latest: 3.0.0). Update with `--update-manual`
+> dispatch(new \App\Jobs\TestJob());
+= Illuminate\Foundation\Bus\PendingDispatch {#5344
+    #job: App\Jobs\TestJob {#5343
+      +job: null,
+      +connection: null,
+      +queue: null,
+      +messageGroup: null,
+      +deduplicator: null,
+      +delay: null,
+      +afterCommit: null,
+      +middleware: [],
+      +chained: [],
+      +chainConnection: null,
+      +chainQueue: null,
+      +chainCatchCallbacks: null,
+    },
+    #afterResponse: false,
+  }
+

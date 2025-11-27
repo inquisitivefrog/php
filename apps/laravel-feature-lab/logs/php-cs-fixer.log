@@ -1,0 +1,34 @@
+
+root@a0d39aaeeec1:/var/www/html# php vendor/bin/php-cs-fixer fix --cache-file=/tmp/.php_cs.cache --dry-run --diff --verbose
+You are running PHP CS Fixer on PHP 8.3.27, but the minimum PHP version supported by your project in composer.json is PHP 8.2. Executing PHP CS Fixer on newer PHP versions may introduce syntax or features not yet available in PHP 8.2, which could cause issues under that version. It is recommended to run PHP CS Fixer on PHP 8.2, to fit your project specifics.
+If you need help while solving warnings, ask at https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/discussions/, we will help you!
+
+PHP CS Fixer 3.90.0 Folding Bike by Fabien Potencier, Dariusz Ruminski and contributors.
+PHP runtime: 8.3.27
+Running analysis on 1 core sequentially.
+You can enable parallel runner and speed up the analysis! Please see usage docs for more information.
+Loaded config default.
+
+In Finder.php line 667:
+                                                                                 
+  [LogicException]                                                               
+  You must call one of in() or append() methods before iterating over a Finder.  
+                                                                                 
+
+Exception trace:
+  at /var/www/html/vendor/symfony/finder/Finder.php:667
+ Symfony\Component\Finder\Finder->getIterator() at n/a:n/a
+ iterator_to_array() at /var/www/html/vendor/friendsofphp/php-cs-fixer/src/Console/Command/FixCommand.php:346
+ PhpCsFixer\Console\Command\FixCommand->execute() at /var/www/html/vendor/symfony/console/Command/Command.php:318
+ Symfony\Component\Console\Command\Command->run() at /var/www/html/vendor/symfony/console/Application.php:1055
+ Symfony\Component\Console\Application->doRunCommand() at /var/www/html/vendor/friendsofphp/php-cs-fixer/src/Console/Application.php:195
+ PhpCsFixer\Console\Application->doRunCommand() at /var/www/html/vendor/symfony/console/Application.php:356
+ Symfony\Component\Console\Application->doRun() at /var/www/html/vendor/friendsofphp/php-cs-fixer/src/Console/Application.php:117
+ PhpCsFixer\Console\Application->doRun() at /var/www/html/vendor/symfony/console/Application.php:195
+ Symfony\Component\Console\Application->run() at /var/www/html/vendor/friendsofphp/php-cs-fixer/php-cs-fixer:110
+ include() at /var/www/html/vendor/bin/php-cs-fixer:119
+
+fix [--path-mode PATH-MODE] [--allow-risky ALLOW-RISKY] [--config CONFIG] [--dry-run] [--rules RULES] [--using-cache USING-CACHE] [--allow-unsupported-php-version ALLOW-UNSUPPORTED-PHP-VERSION] [--cache-file CACHE-FILE] [--diff] [--format FORMAT] [--stop-on-violation] [--show-progress SHOW-PROGRESS] [--sequential] [--] [<path>...]
+
+root@a0d39aaeeec1:/var/www/html# 
+

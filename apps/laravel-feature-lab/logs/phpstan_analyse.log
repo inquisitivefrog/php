@@ -1,0 +1,108 @@
+
+root@a0d39aaeeec1:/var/www/html# php vendor/bin/phpstan analyse --memory-limit=1G
+Note: Using configuration file /var/www/html/phpstan.neon.
+ 19/19 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
+
+ ------ ------------------------------------------------------------------------------------------------- 
+  Line   app/Http/Controllers/CowController.php                                                           
+ ------ ------------------------------------------------------------------------------------------------- 
+  11     Class App\Http\Controllers\CowController extends unknown class App\Http\Controllers\Controller.  
+         💡  Learn more at https://phpstan.org/user-guide/discovering-symbols                             
+  16     Method App\Http\Controllers\CowController::index() has no return type specified.                 
+         🪪  missingType.return                                                                           
+  40     Method App\Http\Controllers\CowController::store() has no return type specified.                 
+         🪪  missingType.return                                                                           
+  54     Method App\Http\Controllers\CowController::show() has no return type specified.                  
+         🪪  missingType.return                                                                           
+  62     Method App\Http\Controllers\CowController::update() has no return type specified.                
+         🪪  missingType.return                                                                           
+  72     Method App\Http\Controllers\CowController::destroy() has no return type specified.               
+         🪪  missingType.return                                                                           
+ ------ ------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------------------------- 
+  Line   app/Http/Requests/CowStoreRequest.php                                                                              
+ ------ ------------------------------------------------------------------------------------------------------------------- 
+  15     Method App\Http\Requests\CowStoreRequest::rules() return type has no value type specified in iterable type array.  
+         🪪  missingType.iterableValue                                                                                      
+         💡  See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type                         
+ ------ ------------------------------------------------------------------------------------------------------------------- 
+
+ ------ -------------------------------------------------------------------------------------------------------------------- 
+  Line   app/Http/Requests/CowUpdateRequest.php                                                                              
+ ------ -------------------------------------------------------------------------------------------------------------------- 
+  16     Method App\Http\Requests\CowUpdateRequest::rules() return type has no value type specified in iterable type array.  
+         🪪  missingType.iterableValue                                                                                       
+         💡  See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type                          
+  18     Access to an undefined property (object|string)::$id.                                                               
+         🪪  property.notFound                                                                                               
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                               
+ ------ -------------------------------------------------------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------------------------ 
+  Line   app/Http/Resources/CowResource.php                                                                                
+ ------ ------------------------------------------------------------------------------------------------------------------ 
+  9      Method App\Http\Resources\CowResource::toArray() return type has no value type specified in iterable type array.  
+         🪪  missingType.iterableValue                                                                                     
+         💡  See: https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type                        
+  12     Access to an undefined property App\Http\Resources\CowResource::$id.                                              
+         🪪  property.notFound                                                                                             
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                             
+  13     Access to an undefined property App\Http\Resources\CowResource::$name.                                            
+         🪪  property.notFound                                                                                             
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                             
+  14     Access to an undefined property App\Http\Resources\CowResource::$tag_number.                                      
+         🪪  property.notFound                                                                                             
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                             
+  15     Access to an undefined property App\Http\Resources\CowResource::$breed.                                           
+         🪪  property.notFound                                                                                             
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                             
+  16     Access to an undefined property App\Http\Resources\CowResource::$dob.                                             
+         🪪  property.notFound                                                                                             
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                             
+  16     Cannot call method toDateString() on mixed.                                                                       
+         🪪  method.nonObject                                                                                              
+  17     Access to an undefined property App\Http\Resources\CowResource::$weight_kg.                                       
+         🪪  property.notFound                                                                                             
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                             
+  17     Cannot cast mixed to float.                                                                                       
+         🪪  cast.double                                                                                                   
+  18     Access to an undefined property App\Http\Resources\CowResource::$notes.                                           
+         🪪  property.notFound                                                                                             
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                             
+  20     Access to an undefined property App\Http\Resources\CowResource::$created_at.                                      
+         🪪  property.notFound                                                                                             
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                             
+  20     Cannot call method toIso8601String() on mixed.                                                                    
+         🪪  method.nonObject                                                                                              
+  21     Access to an undefined property App\Http\Resources\CowResource::$updated_at.                                      
+         🪪  property.notFound                                                                                             
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-undefined-property                             
+  21     Cannot call method toIso8601String() on mixed.                                                                    
+         🪪  method.nonObject                                                                                              
+ ------ ------------------------------------------------------------------------------------------------------------------ 
+
+ ------ ----------------------------------------------------------------- 
+  Line   app/Jobs/TestJob.php                                             
+ ------ ----------------------------------------------------------------- 
+  23     Method App\Jobs\TestJob::handle() has no return type specified.  
+         🪪  missingType.return                                           
+ ------ ----------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------------------------------------------------------------------------------ 
+  Line   app/Models/Cow.php                                                                                                                  
+ ------ ------------------------------------------------------------------------------------------------------------------------------------ 
+  10     Class App\Models\Cow uses generic trait Illuminate\Database\Eloquent\Factories\HasFactory but does not specify its types: TFactory  
+         🪪  missingType.generics                                                                                                            
+ ------ ------------------------------------------------------------------------------------------------------------------------------------ 
+
+ -- ---------------------------------------------------------------------------------------------------------- 
+     Error                                                                                                     
+ -- ---------------------------------------------------------------------------------------------------------- 
+     Ignored error pattern #Unsafe usage of new static\(\)# was not matched in reported errors.                
+     Ignored error pattern #Property [^ ]+ does not accept null# was not matched in reported errors.           
+     Ignored error pattern #Method [^ ]+ should return [^ ]+ but returns# was not matched in reported errors.  
+ -- ---------------------------------------------------------------------------------------------------------- 
+
+                                                                                                                        
+ [ERROR] Found 28 errors                                                                                                

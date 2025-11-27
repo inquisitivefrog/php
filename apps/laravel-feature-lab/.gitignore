@@ -68,6 +68,7 @@ docker/php/*.local.ini
 # ──────────────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
+*.log
 *.cache
 *.tmp
 .idea/

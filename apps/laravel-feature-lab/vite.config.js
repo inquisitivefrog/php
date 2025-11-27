@@ -9,4 +9,11 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        host: '0.0.0.0',  // listen on all container interfaces
+        port: 5173,
+        strictPort: true,  // fail if port is taken
+    },
+});
+
 });

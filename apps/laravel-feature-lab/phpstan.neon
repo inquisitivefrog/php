@@ -1,0 +1,20 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: max
+
+    paths:
+        - app
+        - database
+        - routes
+
+    scanFiles:
+        - bootstrap/app.php
+
+    tmpDir: storage/framework/phpstan
+
+    ignoreErrors:
+        - '#Unsafe usage of new static\(\)#'
+        - '#Property [^ ]+ does not accept null#'
+        - '#Method [^ ]+ should return [^ ]+ but returns#'

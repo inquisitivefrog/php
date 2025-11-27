@@ -1,42 +1,23 @@
-sre@cpp:~/laravel-feature-lab$ docker build --target php-extensions   -t laravel-php-extensions   -f docker/php/Dockerfile .
-[+] Building 0.1s (13/13) FINISHED                                                                                                                                       docker:default
- => [internal] load build definition from Dockerfile                                                                                                                               0.0s
- => => transferring dockerfile: 3.92kB                                                                                                                                             0.0s
- => [internal] load metadata for docker.io/library/php:8.3-fpm                                                                                                                     0.1s
- => [internal] load .dockerignore                                                                                                                                                  0.0s
- => => transferring context: 93B                                                                                                                                                   0.0s
- => [php-base 1/3] FROM docker.io/library/php:8.3-fpm@sha256:25d6030b5ecd11f7edcbdedbfed3dae55d2032330eed73eaeab5ae0bcb54bc9d                                                      0.0s
- => CACHED [php-base 2/3] WORKDIR /var/www/html                                                                                                                                    0.0s
- => CACHED [php-base 3/3] RUN apt-get update     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends         ca-certificates curl git unzip gnupg2        0.0s
- => CACHED [php-extensions 1/6] RUN apt-get update && apt-get install -y --no-install-recommends         libicu-dev libxml2-dev libgmp-dev libssl-dev uuid-dev     && rm -rf /var  0.0s
- => CACHED [php-extensions 2/6] RUN docker-php-ext-install -j$(nproc)         pdo pdo_pgsql bcmath mbstring exif pcntl zip intl gmp soap dom xml xmlwriter opcache                 0.0s
- => CACHED [php-extensions 3/6] RUN docker-php-ext-configure gd --with-freetype --with-jpeg     && docker-php-ext-install -j$(nproc) gd                                            0.0s
- => CACHED [php-extensions 4/6] RUN pecl channel-update pecl.php.net     && pecl install redis apcu     && docker-php-ext-enable redis apcu                                        0.0s
- => CACHED [php-extensions 5/6] RUN if [ "false" = "true" ]; then         pecl install xdebug && docker-php-ext-enable xdebug;     else echo "Skipping Xdebug installation"; fi    0.0s
- => CACHED [php-extensions 6/6] RUN apt-get purge -y --auto-remove g++     && rm -rf /tmp/* /var/tmp/*                                                                             0.0s
- => exporting to image                                                                                                                                                             0.0s
- => => exporting layers                                                                                                                                                            0.0s
- => => writing image sha256:41b4e57d94836bf610fbd62a1273abcb89e3622428846d9209c209640b2f8590                                                                                       0.0s
- => => naming to docker.io/library/laravel-php-extensions                                                                                                                          0.0s
 
-sre@cpp:~/laravel-feature-lab$ docker build --no-cache --target php-extensions -t laravel-php-extensions -f docker/php/Dockerfile .
-[+] Building 105.8s (13/13) FINISHED                                                                                                                                     docker:default
- => [internal] load build definition from Dockerfile                                                                                                                               0.0s
- => => transferring dockerfile: 3.96kB                                                                                                                                             0.0s
- => [internal] load metadata for docker.io/library/php:8.3-fpm                                                                                                                     0.3s
- => [internal] load .dockerignore                                                                                                                                                  0.0s
- => => transferring context: 93B                                                                                                                                                   0.0s
- => [php-base 1/3] FROM docker.io/library/php:8.3-fpm@sha256:25d6030b5ecd11f7edcbdedbfed3dae55d2032330eed73eaeab5ae0bcb54bc9d                                                      0.0s
- => CACHED [php-base 2/3] WORKDIR /var/www/html                                                                                                                                    0.0s
- => [php-base 3/3] RUN apt-get update     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends         ca-certificates curl git unzip gnupg2         zlib  9.7s
- => [php-extensions 1/6] RUN apt-get update && apt-get install -y --no-install-recommends         libicu-dev libxml2-dev libgmp-dev libssl-dev uuid-dev     && rm -rf /var/lib/ap  8.3s
- => [php-extensions 2/6] RUN docker-php-ext-install -j$(nproc)         pdo pdo_pgsql bcmath mbstring exif pcntl zip intl gmp soap dom xml xmlwriter opcache                       58.9s 
- => [php-extensions 3/6] RUN docker-php-ext-configure gd --with-freetype --with-jpeg     && docker-php-ext-install -j$(nproc) gd                                                   4.6s 
- => [php-extensions 4/6] RUN pecl channel-update pecl.php.net     && pecl install redis apcu     && docker-php-ext-enable redis apcu                                              23.4s 
- => [php-extensions 5/6] RUN if [ "false" = "true" ]; then         pecl install xdebug && docker-php-ext-enable xdebug;     else echo "Skipping Xdebug installation"; fi           0.1s 
- => [php-extensions 6/6] RUN apt-get purge -y --auto-remove g++     && rm -rf /tmp/* /var/tmp/*                                                                                    0.3s 
- => exporting to image                                                                                                                                                             0.3s 
- => => exporting layers                                                                                                                                                            0.3s 
- => => writing image sha256:73c94eefbca0d7d0841e74e577918a2e486f1c154c7038892598539e15ae331c                                                                                       0.0s 
- => => naming to docker.io/library/laravel-php-extensions                                                                                                                          0.0s 
-sre@cpp:~/laravel-feature-lab$                                                             
+sre@cpp:~/laravel-feature-lab$ docker build --no-cache --target php-extensions -t laravel-php-ext -f docker/php/Dockerfile .
+[+] Building 109.6s (13/13) FINISHED                                                                                                                                      docker:default 
+ => [internal] load build definition from Dockerfile                                                                                                                                0.0s
+ => => transferring dockerfile: 4.53kB                                                                                                                                              0.0s
+ => [internal] load metadata for docker.io/library/php:8.3-fpm                                                                                                                      0.3s
+ => [internal] load .dockerignore                                                                                                                                                   0.0s
+ => => transferring context: 93B                                                                                                                                                    0.0s
+ => [php-base 1/3] FROM docker.io/library/php:8.3-fpm@sha256:3ab31cc298c37a87ed1d67c46e9bb9825528137fd88d9343f0d8036fd151742c                                                       0.0s
+ => => resolve docker.io/library/php:8.3-fpm@sha256:3ab31cc298c37a87ed1d67c46e9bb9825528137fd88d9343f0d8036fd151742c                                                                0.0s
+ => CACHED [php-base 2/3] WORKDIR /var/www/html                                                                                                                                     0.0s
+ => [php-base 3/3] RUN apt-get update     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends         ca-certificates curl git unzip gnupg2         zlib  11.2s
+ => [php-extensions 1/6] RUN apt-get update && apt-get install -y --no-install-recommends         libicu-dev libxml2-dev libgmp-dev libssl-dev uuid-dev     && rm -rf /var/lib/apt  9.6s
+ => [php-extensions 2/6] RUN docker-php-ext-install -j$(nproc)         pdo_pgsql         bcmath         mbstring         exif         pcntl         zip         intl         gmp   58.9s 
+ => [php-extensions 3/6] RUN docker-php-ext-configure gd --with-freetype --with-jpeg     && docker-php-ext-install -j$(nproc) gd                                                    4.7s 
+ => [php-extensions 4/6] RUN pecl channel-update pecl.php.net     && pecl install redis apcu     && docker-php-ext-enable redis apcu                                               24.1s 
+ => [php-extensions 5/6] RUN if [ "false" = "true" ]; then         pecl install xdebug && docker-php-ext-enable xdebug;     else echo "Skipping Xdebug installation"; fi            0.1s 
+ => [php-extensions 6/6] RUN apt-get purge -y --auto-remove g++     && rm -rf /tmp/* /var/tmp/*                                                                                     0.3s 
+ => exporting to image                                                                                                                                                              0.2s 
+ => => exporting layers                                                                                                                                                             0.2s 
+ => => writing image sha256:4be11e4893e75b131102dd9e94bd0912e055de6e9a68ad80a32024738f9a9656                                                                                        0.0s 
+ => => naming to docker.io/library/laravel-php-ext                                                                                                                                  0.0s 
+

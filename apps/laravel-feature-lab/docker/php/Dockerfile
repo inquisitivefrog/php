@@ -28,7 +28,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install -j$(nproc) \
-        pdo pdo_pgsql bcmath mbstring exif pcntl zip intl gmp soap dom xml xmlwriter opcache
+        pdo_pgsql \
+        bcmath \
+        mbstring \
+        exif \
+        pcntl \
+        zip \
+        intl \
+        gmp \
+        soap \
+        dom \
+        xml \
+        xmlwriter \
+        opcache
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
@@ -48,57 +60,61 @@ RUN apt-get purge -y --auto-remove g++ \
 # 3. Composer Dependencies (cached)
 ############################################
 FROM php-extensions AS composer-deps
-
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
 WORKDIR /var/www/html
 
 COPY src/composer.json src/composer.lock ./
+
+RUN composer require \
+        laravel/breeze \
+        laravel/pennant \
+        laravel/cashier \
+        meilisearch/meilisearch-php \
+        --no-interaction --no-scripts || true
+
 RUN composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader --no-scripts
 
 ############################################
 # 4. Node Dependencies (cached)
 ############################################
-FROM php-extensions AS node-deps
+FROM composer-deps AS node-deps
 
-# Install Node 20 + npm
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs \
+    && apt-get install -y --no-install-recommends nodejs \
     && node -v && npm -v
 
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        jq ca-certificates curl
+
+RUN curl --retry 5 -fsSL -o /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_arm64 \
+    && chmod +x /usr/local/bin/yq \
+    && /usr/local/bin/yq --version \
+    && jq --version \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /var/www/html
-
-# Copy package.json + package-lock.json from source
 COPY src/package.json src/package-lock.json ./
-
-# Install all devDependencies locally (includes Vite)
 RUN npm install --silent --no-audit
-
-# Ensure Vite CLI is globally available
 RUN npm install -g vite@^7.0.7 --silent \
     && ln -sf $(npm root -g)/vite/bin/vite.js /usr/local/bin/vite
 
 ############################################
-# 5. Application Build (Composer + Node)
+# 5. Application Build
 ############################################
 FROM node-deps AS app-build
 WORKDIR /var/www/html
 
-# Copy Composer deps
 COPY --from=composer-deps /var/www/html/vendor ./vendor
-
-# Copy Node deps
 COPY --from=node-deps /var/www/html/node_modules ./node_modules
 
-# Copy full Laravel source
+COPY src/phpstan.neon src/php-cs-fixer.php src/pint.json ./
 COPY src/ ./
 
-# Frontend build (Vite)
 RUN if [ -f package.json ] && grep -q "build" package.json; then \
         npm run build --if-present; \
     else echo "No frontend build needed"; fi
 
-# Optimize autoload + cached config (for production)
 RUN composer dump-autoload --optimize --classmap-authoritative || true
 RUN php artisan package:discover --ansi || true
 
@@ -110,20 +126,16 @@ RUN if [ "$APP_ENV" = "production" ]; then \
 ############################################
 # 6. Production Runtime
 ############################################
-FROM php:${PHP_VERSION}-fpm AS laravel-production
+FROM app-build AS laravel-production
 ARG UID=1000
 ARG GID=1000
 
-# Create app user
 RUN groupadd -g ${GID} laravel \
     && useradd -u ${UID} -g ${GID} -m -s /bin/bash laravel
 
 WORKDIR /var/www/html
-
-# Bring in built application
 COPY --from=app-build /var/www/html /var/www/html
 
-# Fix permissions
 RUN chown -R laravel:laravel /var/www/html \
     && find /var/www/html -type f -exec chmod 0640 {} \; \
     && find /var/www/html -type d -exec chmod 0750 {} \; \
@@ -133,8 +145,6 @@ COPY docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 USER laravel
-
 EXPOSE 9000
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["php-fpm"]
-

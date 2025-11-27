@@ -1,0 +1,14 @@
+
+sre@cpp:~/laravel-feature-lab$ docker compose exec app php artisan tinker
+Psy Shell v0.12.14 (PHP 8.3.27 — cli) by Justin Hileman
+New PHP manual is available (latest: 3.0.0). Update with `--update-manual`
+> \Cache::store('redis')->put('test_key', 'it works!', 10);
+= true
+
+> \Cache::store('redis')->get('test_key');
+= "it works!"
+
+> exit
+
+   INFO  Goodbye.
+
