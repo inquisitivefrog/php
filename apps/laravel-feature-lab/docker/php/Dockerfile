@@ -108,7 +108,9 @@ WORKDIR /var/www/html
 COPY --from=composer-deps /var/www/html/vendor ./vendor
 COPY --from=node-deps /var/www/html/node_modules ./node_modules
 
-COPY src/phpstan.neon src/php-cs-fixer.php src/pint.json ./
+# Copy config files from project root (these are in root, not src/)
+COPY phpstan.neon php-cs-fixer.php pint.json ./
+# Copy Laravel application from src/ directory
 COPY src/ ./
 
 RUN if [ -f package.json ] && grep -q "build" package.json; then \

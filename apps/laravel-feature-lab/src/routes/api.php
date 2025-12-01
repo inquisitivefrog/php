@@ -1,4 +1,8 @@
-use App\Http\Controllers\CowController;
+<?php
 
-Route::apiResource('cows', CowController::class);
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
+Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+    return $request->user();
+});
