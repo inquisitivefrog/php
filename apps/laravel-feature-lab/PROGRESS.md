@@ -104,12 +104,20 @@ docker compose exec workspace bash
    - `POST /api/logout` - User logout (revokes token)
    - `GET /api/user` - Get authenticated user (protected)
 
-2. **Pennant** (Feature Flags)
+2. **Pennant** (Feature Flags) - ✅ COMPLETED
    ```bash
-   composer require laravel/pennant
-   php artisan pennant:install
-   php artisan migrate
+   # Commands run:
+   docker compose run --rm workspace composer require laravel/pennant --no-interaction
+   docker compose run --rm workspace php artisan vendor:publish --provider="Laravel\Pennant\PennantServiceProvider" --no-interaction
+   docker compose run --rm workspace php artisan migrate --no-interaction
    ```
+   **Status**: ✅ Pennant v1.18.4 installed
+   **Implementation**:
+   - Published config file: `config/pennant.php`
+   - Created migration: `2025_12_01_214446_create_features_table`
+   - Migration creates `features` table with columns: id, name, scope, value, timestamps
+   - Default store: database (configurable via `PENNANT_STORE` env var)
+   - Ready to define feature flags
 
 3. **Scout** (Search)
    ```bash
@@ -149,8 +157,8 @@ docker compose exec workspace bash
 
 ### Feature Implementation Checklist
 
-- [ ] **Breeze**: Login/Register UI, API tokens
-- [ ] **Pennant**: Feature flags for premium features
+- [x] **Breeze**: Login/Register UI, API tokens ✅
+- [x] **Pennant**: Feature flags for premium features ✅ (installed, ready to implement)
 - [ ] **Scout**: Search tasks and projects
 - [ ] **Notifications**: Email alerts for task assignments
 - [ ] **Horizon**: Queue dashboard, background jobs
