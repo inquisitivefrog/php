@@ -126,27 +126,102 @@ docker compose exec workspace bash
    php artisan vendor:publish --provider="Laravel\Scout\ScoutServiceProvider"
    ```
 
-4. **Horizon** (Queue Dashboard)
+4. **Horizon** (Queue Dashboard) - ✅ COMPLETED
    ```bash
-   composer require laravel/horizon
-   php artisan horizon:install
-   php artisan horizon:publish
-   php artisan migrate
+   # Commands run:
+   docker compose run --rm workspace composer require laravel/horizon --no-interaction
+   docker compose run --rm workspace php artisan horizon:install --no-interaction
+   docker compose run --rm workspace php artisan migrate --no-interaction
    ```
+   **Status**: ✅ Horizon v5.40 installed
+   **Implementation**:
+   - Published config file: `config/horizon.php`
+   - Created `HorizonServiceProvider` with authentication gate
+   - Dashboard available at `/horizon` (requires authentication)
+   - Created 8 job examples demonstrating various queue features
+   - Created `QueueDemoController` with API endpoints
+   - Created comprehensive tests: `HorizonQueueTest.php` (26 tests, 35 assertions)
+   
+   **Job Examples Created**:
+   - `TestJob` - Basic job
+   - `ProcessEmailJob` - Email processing (emails queue, 3 retries)
+   - `ProcessImageJob` - Image processing (images queue, 120s timeout)
+   - `GenerateReportJob` - Report generation (reports queue, unique jobs)
+   - `FailedJobExample` - Failure testing (retry logic)
+   - `ChainedJob` - Job chaining
+   - `BatchableJob` - Batch processing
+   - `DelayedJob` - Delayed execution
+   
+   **API Endpoints**:
+   - `POST /api/queue/test` - Dispatch test job
+   - `POST /api/queue/email` - Dispatch email job
+   - `POST /api/queue/delayed` - Dispatch delayed job
+   - `POST /api/queue/chain` - Dispatch chained jobs
+   - `POST /api/queue/batch` - Dispatch batch jobs
+   - `POST /api/queue/failed` - Dispatch failed job (for testing)
+   - `GET /api/queue/stats` - Get queue statistics
+   
+   **Note**: Horizon is FREE - it's just a dashboard for monitoring queues. No costs involved.
 
-5. **Telescope** (Debugging)
+5. **Telescope** (Debugging) - ✅ COMPLETED
    ```bash
-   composer require laravel/telescope --dev
-   php artisan telescope:install
-   php artisan migrate
+   # Commands run:
+   docker compose run --rm workspace composer require laravel/telescope --dev --no-interaction
+   docker compose run --rm workspace php artisan telescope:install --no-interaction
+   docker compose run --rm workspace php artisan migrate --no-interaction
    ```
+   **Status**: ✅ Telescope v5.15 installed
+   **Implementation**:
+   - Published config file: `config/telescope.php`
+   - Created `TelescopeServiceProvider` with authentication gate and entry filtering
+   - Dashboard available at `/telescope` (requires authentication)
+   - Created migration: `2025_12_05_004456_create_telescope_entries_table`
+   - Created `TelescopeDemoController` with 10 API endpoints
+   - Created comprehensive tests: `TelescopeTest.php` (20 tests, 61 assertions)
+   
+   **API Endpoints**:
+   - `GET /api/telescope-demo/queries` - Demonstrate database queries
+   - `GET /api/telescope-demo/cache` - Demonstrate cache operations
+   - `POST /api/telescope-demo/job` - Dispatch a job
+   - `GET /api/telescope-demo/logs` - Write log entries
+   - `GET /api/telescope-demo/exception` - Throw an exception
+   - `POST /api/telescope-demo/models` - Perform model operations
+   - `POST /api/telescope-demo/event` - Dispatch an event
+   - `GET /api/telescope-demo/multiple` - Multiple operations
+   - `GET /api/telescope-demo/slow-query` - Slow query demonstration
+   - `GET /api/telescope-demo/n-plus-one` - N+1 query demonstration
+   
+   **Note**: Telescope is FREE - it's a debugging/monitoring tool. No costs involved.
 
-6. **Cashier** (Subscriptions - Stripe)
+6. **Cashier** (Subscriptions - Stripe) - ✅ COMPLETED
    ```bash
-   composer require laravel/cashier
-   php artisan vendor:publish --tag="cashier-migrations"
-   php artisan migrate
+   # Commands run:
+   docker compose run --rm workspace composer require laravel/cashier --no-interaction
+   docker compose run --rm workspace php artisan vendor:publish --tag="cashier-migrations" --no-interaction
+   docker compose run --rm workspace php artisan migrate --no-interaction
    ```
+   **Status**: ✅ Cashier v16.1 installed
+   **Implementation**:
+   - Published migrations: `2025_12_04_175042_create_customer_columns`, `2025_12_04_175043_create_subscriptions_table`, `2025_12_04_175044_create_subscription_items_table`, etc.
+   - Added `Billable` trait to `User` model
+   - Created `SubscriptionController` with endpoints: index, checkout, cancel, resume, portal
+   - Updated feature flags to check subscription status (`premium-analytics`, `team-collaboration`, `unlimited-tasks`)
+   - Added Stripe configuration to `config/services.php`
+   - Created subscription API routes under `/api/subscription`
+   - Created comprehensive tests: `SubscriptionTest.php`
+   - Documentation: `docs/cashier-setup.md`
+   
+   **API Endpoints**:
+   - `GET /api/subscription` - Get subscription status
+   - `POST /api/subscription/checkout` - Create checkout session
+   - `POST /api/subscription/cancel` - Cancel subscription
+   - `POST /api/subscription/resume` - Resume subscription
+   - `GET /api/subscription/portal` - Get billing portal URL
+   
+   **Note**: Requires Stripe API keys in `.env`:
+   - `STRIPE_KEY` - Publishable key
+   - `STRIPE_SECRET` - Secret key
+   - `STRIPE_WEBHOOK_SECRET` - Webhook signing secret (optional)
 
 7. **Notifications** (Built-in, but we'll create examples)
    - Already available via `Illuminate\Notifications\Notifiable` trait
@@ -161,9 +236,9 @@ docker compose exec workspace bash
 - [x] **Pennant**: Feature flags for premium features ✅ (installed, ready to implement)
 - [ ] **Scout**: Search tasks and projects
 - [ ] **Notifications**: Email alerts for task assignments
-- [ ] **Horizon**: Queue dashboard, background jobs
+- [x] **Horizon**: Queue dashboard, background jobs ✅
 - [ ] **Telescope**: Request monitoring, debugging
-- [ ] **Cashier**: Subscription management (Stripe test mode)
+- [x] **Cashier**: Subscription management (Stripe test mode) ✅
 
 ---
 

@@ -165,26 +165,24 @@ class FeatureServiceProvider extends ServiceProvider
         });
 
         // ============================================================
-        // 9. SUBSCRIPTION-BASED FLAGS (For Future Cashier Integration)
+        // 9. SUBSCRIPTION-BASED FLAGS (Cashier Integration)
         // ============================================================
         // Enable premium features based on subscription
         Feature::define('premium-analytics', function (User $user) {
-            // When Cashier is installed, check subscription
-            // For now, use a placeholder
-            // return $user->subscribed('default');
-            return false; // Disabled until Cashier is set up
+            // Enable for users with any active subscription
+            return $user->subscribed();
         });
 
         Feature::define('team-collaboration', function (User $user) {
             // Enable for Pro tier subscribers
-            // return $user->subscribedToPrice('price_pro_tier');
-            return false; // Disabled until Cashier is set up
+            // Replace 'price_pro_tier' with your actual Stripe price ID
+            // For demo purposes, check if user has any subscription
+            return $user->subscribed();
         });
 
         Feature::define('unlimited-tasks', function (User $user) {
-            // Enable for paid subscribers
-            // return $user->subscribed();
-            return false; // Disabled until Cashier is set up
+            // Enable for paid subscribers (any active subscription)
+            return $user->subscribed();
         });
 
         // ============================================================
