@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\CowController;
 use App\Http\Controllers\FeatureFlagDemoController;
+use App\Http\Controllers\NotificationDemoController;
 use App\Http\Controllers\QueueDemoController;
+use App\Http\Controllers\ScoutDemoController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\TelescopeDemoController;
 use Illuminate\Http\Request;
@@ -62,4 +64,27 @@ Route::middleware(['auth:sanctum'])->prefix('telescope-demo')->name('telescope-d
     Route::get('/multiple', [TelescopeDemoController::class, 'multipleOperations'])->name('multiple');
     Route::get('/slow-query', [TelescopeDemoController::class, 'slowQuery'])->name('slow-query');
     Route::get('/n-plus-one', [TelescopeDemoController::class, 'nPlusOneQuery'])->name('n-plus-one');
+});
+
+// Scout demo routes (require authentication)
+Route::middleware(['auth:sanctum'])->prefix('scout-demo')->name('scout-demo.')->group(function () {
+    Route::post('/search', [ScoutDemoController::class, 'basicSearch'])->name('search');
+    Route::post('/search/paginated', [ScoutDemoController::class, 'paginatedSearch'])->name('search.paginated');
+    Route::post('/search/filtered', [ScoutDemoController::class, 'filteredSearch'])->name('search.filtered');
+    Route::post('/search/field', [ScoutDemoController::class, 'fieldSearch'])->name('search.field');
+    Route::post('/search/ordered', [ScoutDemoController::class, 'orderedSearch'])->name('search.ordered');
+    Route::post('/import', [ScoutDemoController::class, 'importAll'])->name('import');
+    Route::post('/remove', [ScoutDemoController::class, 'removeAll'])->name('remove');
+    Route::get('/stats', [ScoutDemoController::class, 'stats'])->name('stats');
+});
+
+// Notification demo routes (require authentication)
+Route::middleware(['auth:sanctum'])->prefix('notifications')->name('notifications.')->group(function () {
+    Route::post('/welcome', [NotificationDemoController::class, 'sendWelcomeEmail'])->name('welcome');
+    Route::post('/task-assigned', [NotificationDemoController::class, 'sendTaskAssigned'])->name('task-assigned');
+    Route::post('/password-reset-sms', [NotificationDemoController::class, 'sendPasswordResetSms'])->name('password-reset-sms');
+    Route::post('/order-confirmation', [NotificationDemoController::class, 'sendOrderConfirmation'])->name('order-confirmation');
+    Route::post('/system-alert', [NotificationDemoController::class, 'sendSystemAlert'])->name('system-alert');
+    Route::post('/broadcast', [NotificationDemoController::class, 'sendToMultipleUsers'])->name('broadcast');
+    Route::get('/stats', [NotificationDemoController::class, 'stats'])->name('stats');
 });

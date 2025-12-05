@@ -18,10 +18,15 @@ class CowController extends Controller
         $query = Cow::query();
 
         if ($q = $request->query('q')) {
-            // Simple DB-backed search. Replace with Scout/Meili for production search.
-            $query->where('name', 'ilike', "%{$q}%")
-                ->orWhere('tag_number', 'ilike', "%{$q}%")
-                ->orWhere('breed', 'ilike', "%{$q}%");
+            // Use Scout for full-text search
+            $perPage = (int) $request->query('per_page', 15);
+            $cows = Cow::search($q)->paginate($perPage);
+            
+            return CowResource::collection($cows)->additional([
+                'meta' => [
+                    'search' => $q,
+                ],
+            ]);
         }
 
         $perPage = (int) $request->query('per_page', 15);
