@@ -14,8 +14,8 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Cow CRUD Routes (no auth required for tests)
-Route::apiResource('cows', CowController::class);
+// Cow CRUD Routes (require authentication for policy authorization)
+Route::middleware(['auth:sanctum'])->apiResource('cows', CowController::class);
 
 // Feature Flag Demo Routes
 Route::middleware(['auth:sanctum'])->group(function () {

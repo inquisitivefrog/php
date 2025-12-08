@@ -3,6 +3,6 @@
 # Usage: php-docker [php-args...]
 
 cd "$(dirname "$0")" || exit 1
-docker compose exec --rm workspace php "$@"
+docker compose run --rm workspace php "$@"
 
 

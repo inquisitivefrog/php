@@ -15,6 +15,7 @@ RUN apt-get update \
         ca-certificates curl git unzip gnupg2 \
         zlib1g-dev libzip-dev libpq-dev libpng-dev \
         libjpeg-dev libfreetype6-dev libonig-dev g++ \
+        postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
 ############################################

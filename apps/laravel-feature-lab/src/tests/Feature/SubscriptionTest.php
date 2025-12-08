@@ -98,5 +98,42 @@ class SubscriptionTest extends TestCase
                 'error' => 'No active subscription found',
             ]);
     }
+
+    /**
+     * Test: GET api/subscription/portal
+     * Demonstrates: Billing portal endpoint
+     */
+    public function test_portal_endpoint_requires_authentication(): void
+    {
+        $response = $this->getJson('/api/subscription/portal');
+        $response->assertStatus(401);
+    }
+
+    /**
+     * Test: POST api/subscription/resume
+     * Demonstrates: Resume subscription endpoint
+     */
+    public function test_resume_requires_cancelled_subscription(): void
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('test-token')->plainTextToken;
+
+        $response = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson('/api/subscription/resume');
+
+        $response->assertStatus(404)
+            ->assertJson([
+                'error' => 'No subscription found',
+            ]);
+    }
+
+    /**
+     * Test: POST api/subscription/resume requires authentication
+     */
+    public function test_resume_requires_authentication(): void
+    {
+        $response = $this->postJson('/api/subscription/resume');
+        $response->assertStatus(401);
+    }
 }
 

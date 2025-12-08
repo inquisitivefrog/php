@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'driver' => env('SCOUT_DRIVER', 'collection'),
+    'driver' => env('SCOUT_DRIVER', 'meilisearch'),
 
     /*
     |--------------------------------------------------------------------------
@@ -140,9 +140,16 @@ return [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
-            // 'users' => [
-            //     'filterableAttributes'=> ['id', 'name', 'email'],
-            // ],
+            'users' => [
+                'filterableAttributes' => ['id', 'email'],
+                'sortableAttributes' => ['name', 'created_at'],
+                'searchableAttributes' => ['name', 'email'],
+            ],
+            'cows' => [
+                'filterableAttributes' => ['breed', 'tag_number'],
+                'sortableAttributes' => ['name', 'weight_kg', 'created_at', 'dob'],
+                'searchableAttributes' => ['name', 'tag_number', 'breed', 'notes'],
+            ],
         ],
     ],
 
