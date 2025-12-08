@@ -89,4 +89,3 @@ class TaskAssignedNotification extends Notification implements ShouldQueue
         ];
     }
 }
-
