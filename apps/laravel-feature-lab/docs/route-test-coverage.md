@@ -132,3 +132,4 @@ All new tests include:
 - Notification tests use `Notification::fake()` to avoid sending actual notifications
 - Subscription tests use database mocking to avoid Stripe API calls
 
+

@@ -23,11 +23,29 @@ class TaskAssignedNotificationTest extends TestCase
     }
 
     /**
-     * Test: TaskAssignedNotification via method returns mail and slack
+     * Test: TaskAssignedNotification via method returns mail only when user has no slack_channel
      */
-    public function test_task_assigned_notification_via_returns_mail_and_slack(): void
+    public function test_task_assigned_notification_via_returns_mail_only_without_slack_channel(): void
     {
         $user = User::factory()->create();
+        $notification = new TaskAssignedNotification('Task Name', 'Admin User');
+        
+        $channels = $notification->via($user);
+        
+        $this->assertContains('mail', $channels);
+        $this->assertNotContains('slack', $channels);
+        $this->assertCount(1, $channels);
+    }
+
+    /**
+     * Test: TaskAssignedNotification via method returns mail and slack when user has slack_channel
+     */
+    public function test_task_assigned_notification_via_returns_mail_and_slack_with_slack_channel(): void
+    {
+        $user = User::factory()->create();
+        // Set slack_channel attribute without persisting to database
+        $user->slack_channel = '#notifications';
+        
         $notification = new TaskAssignedNotification('Task Name', 'Admin User');
         
         $channels = $notification->via($user);

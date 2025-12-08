@@ -1,0 +1,163 @@
+name: Laravel CI (Improved)
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: laravel
+          POSTGRES_PASSWORD: laravel
+          POSTGRES_DB: testing
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      
+      meilisearch:
+        image: getmeili/meilisearch:v1.6
+        env:
+          MEILI_NO_ANALYTICS: "true"
+        ports:
+          - 7700:7700
+        options: >-
+          --health-cmd "curl -f http://localhost:7700/health || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v4
+        with:
+          php-version: '8.3'
+          coverage: xdebug
+          extensions: mbstring, intl, pdo_pgsql, redis, pcntl, bcmath, gmp, zip, xml, soap, dom, xmlwriter, opcache
+          tools: composer
+
+      - name: Copy .env
+        run: |
+          cp .env.example .env
+          echo "APP_KEY=base64:$(openssl rand -base64 32)" >> .env
+          echo "DB_CONNECTION=pgsql" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
+          echo "DB_PORT=5432" >> .env
+          echo "DB_DATABASE=testing" >> .env
+          echo "DB_USERNAME=laravel" >> .env
+          echo "DB_PASSWORD=laravel" >> .env
+          echo "REDIS_HOST=127.0.0.1" >> .env
+          echo "REDIS_PORT=6379" >> .env
+          echo "MEILISEARCH_HOST=http://127.0.0.1:7700" >> .env
+          echo "QUEUE_CONNECTION=redis" >> .env
+          echo "CACHE_DRIVER=redis" >> .env
+          echo "SESSION_DRIVER=redis" >> .env
+
+      - name: Install Composer dependencies
+        working-directory: ./src
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Generate application key
+        working-directory: ./src
+        run: php artisan key:generate
+
+      - name: Run database migrations
+        working-directory: ./src
+        run: php artisan migrate --force
+
+      - name: Run Pint (code formatting check)
+        working-directory: ./src
+        run: vendor/bin/pint --test
+
+      - name: Run PHPStan (static analysis)
+        working-directory: ./src
+        run: vendor/bin/phpstan analyse --memory-limit=2G
+
+      - name: Run PHPUnit tests
+        working-directory: ./src
+        run: vendor/bin/phpunit --coverage-clover=coverage.xml
+
+      - name: Run performance tests
+        working-directory: ./src
+        run: vendor/bin/phpunit tests/Performance/ --stop-on-failure
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./src/coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+  security:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Composer audit
+        working-directory: ./src
+        run: composer audit --format=json --no-interaction || true
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v4
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Install Composer dependencies
+        working-directory: ./src
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Run PHP CS Fixer (dry run)
+        working-directory: ./src
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff
+
+      - name: Run CodeSniffer
+        working-directory: ./src
+        run: vendor/bin/phpcs --standard=PSR12 app/ tests/
+

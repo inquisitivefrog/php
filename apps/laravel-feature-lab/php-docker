@@ -6,3 +6,4 @@ cd "$(dirname "$0")" || exit 1
 docker compose run --rm workspace php "$@"
 
 
+

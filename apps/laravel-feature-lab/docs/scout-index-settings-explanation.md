@@ -132,3 +132,4 @@ Cow::search('cow')->orderBy('weight_kg', 'desc')->get();
    - See your indexes: `users` and `cows`
    - View configured settings
 
+

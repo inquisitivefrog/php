@@ -33,8 +33,14 @@ class TaskAssignedNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        // Always send to both mail and slack for multi-channel demonstration
-        return ['mail', 'slack'];
+        $channels = ['mail'];
+        
+        // Add Slack channel if user has slack_channel configured
+        if (isset($notifiable->slack_channel) && !empty($notifiable->slack_channel)) {
+            $channels[] = 'slack';
+        }
+        
+        return $channels;
     }
 
     /**

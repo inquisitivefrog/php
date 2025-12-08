@@ -127,6 +127,30 @@ services:
       - appnet
 
   # -----------------------------------------------------------
+  # Horizon (Queue Dashboard & Worker)
+  # -----------------------------------------------------------
+  horizon:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    volumes:
+      - ./src:/var/www/html
+      - ./secrets:/run/secrets:ro
+    working_dir: /var/www/html
+    command: php artisan horizon
+    depends_on:
+      - workspace
+      - redis
+      - postgres
+    environment:
+      APP_KEY: /run/secrets/app_key.txt
+      REDIS_HOST: redis
+      REDIS_PASSWORD: null
+      REDIS_PORT: 6379
+    networks:
+      - appnet
+
+  # -----------------------------------------------------------
   # Scheduler (Cron)
   # -----------------------------------------------------------
   scheduler:

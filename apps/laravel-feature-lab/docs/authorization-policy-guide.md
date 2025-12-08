@@ -199,3 +199,4 @@ private function isAdmin(User $user): bool
 
 The `CowPolicy` demonstrates how to implement authorization in Laravel, showing both permissive (view/create) and restrictive (update/delete) authorization patterns.
 
+
