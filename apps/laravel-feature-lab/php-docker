@@ -1,0 +1,8 @@
+#!/bin/bash
+# Wrapper script to run PHP from Docker container for IDE validation
+# Usage: php-docker [php-args...]
+
+cd "$(dirname "$0")" || exit 1
+docker compose exec --rm workspace php "$@"
+
+

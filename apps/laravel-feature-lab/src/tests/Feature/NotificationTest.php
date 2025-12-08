@@ -65,7 +65,7 @@ class NotificationTest extends TestCase
             $user,
             TaskAssignedNotification::class,
             function ($notification, $channels) {
-                return in_array('mail', $channels);
+                return in_array('mail', $channels) && in_array('slack', $channels);
             }
         );
     }
@@ -322,18 +322,19 @@ class NotificationTest extends TestCase
 
     /**
      * Test: Notification channels configuration
-     * Demonstrates: Dynamic channel selection
+     * Demonstrates: Multi-channel notification
      */
     public function test_notification_channels_configuration(): void
     {
         $user = User::factory()->create();
 
-        // TaskAssignedNotification checks for slack_channel
+        // TaskAssignedNotification sends to both mail and slack
         $notification = new TaskAssignedNotification('Task', 'Admin');
         $channels = $notification->via($user);
 
-        // Should include mail, but not slack if user doesn't have slack_channel
+        // Should include both mail and slack
         $this->assertContains('mail', $channels);
+        $this->assertContains('slack', $channels);
     }
 
     /**

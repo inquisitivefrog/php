@@ -70,7 +70,8 @@ class QueueDemoController extends Controller
 
         $delay = $request->input('delay_seconds', 0);
 
-        DelayedJob::dispatch($request->input('message'), $delay);
+        DelayedJob::dispatch($request->input('message'), $delay)
+            ->delay(now()->addSeconds($delay));
 
         return response()->json([
             'message' => 'Delayed job dispatched successfully',
