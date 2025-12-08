@@ -133,3 +133,4 @@ Cow::search('cow')->orderBy('weight_kg', 'desc')->get();
    - View configured settings
 
 
+
